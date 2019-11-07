@@ -1,0 +1,47 @@
+# rsync_snap configuration file
+
+#
+# SETTINGS
+#
+DEST="/path/to/backup/rsync_snap"
+LOG="/var/log/rsync_snap.log"
+# prune old backups after KEEP_DAYS
+KEEP_DAYS=30
+# minimum time between backups
+AGE_MIN=84800
+
+#
+# SOURCES
+#
+
+# list sources to backup ["hostname"]="/path1 /path2" 
+SOURCES=(
+  ["myhostname"]="/ /boot /home"
+  ["myhostname2"]="/ /boot /home"
+)
+
+PRE_SCRIPT=(
+  ["myhostname"]="/usr/local/bin/pre_backup.sh"
+)
+
+POST_SCRIPT=(
+  ["myhostname"]="/usr/local/bin/post_backup.sh"
+)
+
+#
+# EXCLUDES
+#
+EXCLUDE="
+  /var/lib/docker/builder/
+  /var/lib/docker/containerd/
+  /var/lib/docker/containers/
+  /var/lib/docker/image/
+  /var/lib/docker/network/
+  /var/lib/docker/overlay2/
+  /var/lib/docker/plugins/
+  /var/lib/docker/runtimes/
+  /var/lib/docker/swarm/
+  /var/lib/docker/tmp/
+  /var/lib/docker/trust/
+  /var/log/
+"
